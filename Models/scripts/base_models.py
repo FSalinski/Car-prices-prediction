@@ -30,8 +30,8 @@ def train_and_pickle(model, X, y):
 
 def main():
                     
-    X_train = pd.read_csv('.\Data\X_train.csv').drop('Unnamed: 0', axis=1)
-    y_train = pd.read_csv('.\Data\y_train.csv').drop('Unnamed: 0', axis=1)
+    X_train = pd.read_csv('.\data_files\X_train.csv').drop('Unnamed: 0', axis=1)
+    y_train = pd.read_csv('.\data_files\y_train.csv').drop('Unnamed: 0', axis=1)
 
     for model in models_dict:
         train_and_pickle(model, X_train, np.array(y_train).reshape(-1,))
