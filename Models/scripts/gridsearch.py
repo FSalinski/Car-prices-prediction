@@ -1,3 +1,4 @@
+import logging
 import pickle
 import pandas as pd
 import numpy as np
@@ -11,6 +12,9 @@ from xgboost import XGBRegressor
 import warnings
 warnings.simplefilter('ignore')
 
+logging.basicConfig(level=logging.INFO,
+                    format='%(name)s - %(levelname)s - %(message)s')
+
 # Hyperparameters to optimize
 
 ridge_params = {
@@ -21,8 +25,8 @@ ridge_params = {
 
 mlpr_params = {
     'hidden_layer_sizes' : [(80,), (100,), (120,)],
-    'activation' : ['identity', 'logistic', 'tanh', 'relu'],
-    'max_iter' : [4, 6, 8, 10],
+    'activation' : ['identity', 'logistic', 'relu'],
+    'max_iter' : [10, 50, 100, 200],
     'power_t' : [0.25, 0.5, 0.75],
     'random_state' : [1]
 }
@@ -61,6 +65,8 @@ def main():
 
     for gs in [ridge_gs, mlpr_gs, rfreg_gs, xgbreg_gs]:
         gs.fit(X_train, y_train)
+        logging.info(f"Best estimetator is {gs.best_estimator_}")
+        logging.info(f"Best score is {gs.best_score_}")
     
 
     # Bulding and fitting best scoring models
